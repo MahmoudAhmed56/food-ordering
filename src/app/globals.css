@@ -72,4 +72,10 @@ body {
   .container{
     @apply mx-auto px-4 md:px-8 lg:px-16 xl:px-32
   }
+  .section-gap {
+    @apply my-8 md:my-16;
+  }
+  .element-center {
+    @apply flex items-center justify-center;
+  }
 }
