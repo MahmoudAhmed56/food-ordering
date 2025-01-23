@@ -1,46 +1,11 @@
 import MainHeading from "@/components/main-heading";
 import Menu from "@/components/menu";
 import { formatCurrency } from "@/lib/forrmaters";
+import { db } from "@/lib/prisma";
 import Image from "next/image";
 
-const BestSellers = () => {
-  const bestSellers = [
-    {
-      id: crypto.randomUUID(),
-      name: "Pizza 1",
-      description: "this pizaa is fucking nice",
-      basePrise: 10,
-      image: "/assets/images/pizza.png",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "Pizza 1",
-      description: "this pizaa is fucking nice",
-      basePrise: 10,
-      image: "/assets/images/pizza.png",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "Pizza 1",
-      description: "this pizaa is fucking nice",
-      basePrise: 10,
-      image: "/assets/images/pizza.png",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "Pizza 1",
-      description: "this pizaa is fucking nice",
-      basePrise: 10,
-      image: "/assets/images/pizza.png",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "Pizza 1",
-      description: "this pizaa is fucking nice",
-      basePrise: 10,
-      image: "/assets/images/pizza.png",
-    },
-  ];
+const BestSellers = async () => {
+  const bestSellers = await db.product.findMany()
   return (
     <section>
       <div className="container">
