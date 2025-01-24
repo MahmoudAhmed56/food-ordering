@@ -1,9 +1,10 @@
 import Image from "next/image";
 import AddToCartButton from "./add-to-cart-button";
 import { formatCurrency } from "@/lib/forrmaters";
+import { Product } from '@prisma/client';
+import { ProductWithRelations } from "@/types/product";
 
-
-function MenuItem({ item }: { item: any }) {
+function MenuItem({ item }: { item: ProductWithRelations }) {
   
   return (
     <li

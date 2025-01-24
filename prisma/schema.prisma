@@ -9,7 +9,7 @@ generator client {
 }
 
 // datasource db {
-//   provider = "sqlite"
+//   provider = "postgresql"
 //   url      = env("DATABASE_URL")
 // }
 datasource db {
@@ -17,23 +17,89 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+model User {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  password     String
+  name         String
+  image        String?
+  phone        String?
+  streetadress String?
+  postalCode   String?
+  city         String?
+  country      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  orders       OrderedProduct[]
+}
+
 model Product {
-  id          String   @id @default(cuid())
+  id          String           @id @default(cuid())
   name        String
   description String
   image       String
   order       Int
   basePrise   Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
   sizes       Size[]
+  extras      Extra[]
+  Category    Category         @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  orders      OrderedProduct[]
+  // Order       Order?   @relation(fields: [orderId], references: [id])
+  // orderId     String?
 }
 
 model Size {
-  id        String  @id @default(cuid())
+  id        String       @id @default(cuid())
   name      String
   price     Float
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product      @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model Extra {
+  id        String           @id @default(cuid())
+  name      String
+  price     Float
+  Product   Product          @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  order    Int       @default(0)
+  // order    Int       @default(autoincrement())
+  products Product[]
+}
+
+model Order {
+  id            String           @id @default(uuid())
+  paid          Boolean          @default(false)
+  subTotal      Float
+  deliveryFee   Float
+  totalPrice    Float
+  userEmail     String
+  phone         String
+  streetAddress String
+  postalCode    String
+  city          String
+  country       String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  products      OrderedProduct[]
+}
+
+model OrderedProduct {
+  id        String   @id @default(uuid())
+  quantity  Int
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  Product   Product @relation(fields: [productId], references: [id])
   productId String
 }
 
@@ -41,4 +107,12 @@ model Size {
 //   SMALL
 //   MEDIUM
 //   LARGE
+// }
+
+// enum ExtraIngredients {
+//   CHEESE
+//   BACON
+//   TOMATO
+//   ONION
+//   PEPPER
 // }
