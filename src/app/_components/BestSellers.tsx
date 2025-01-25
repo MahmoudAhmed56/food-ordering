@@ -2,11 +2,12 @@ import MainHeading from "@/components/main-heading";
 import Menu from "@/components/menu";
 import { formatCurrency } from "@/lib/forrmaters";
 import { db } from "@/lib/prisma";
-import { getBestSellers } from "@/server/db/products";
+import { getBestSellers, getProductsByCategory } from "@/server/db/products";
 import Image from "next/image";
 
 const BestSellers = async () => {
-  const bestSellers = await getBestSellers(3)
+  const bestSellers = await getBestSellers();
+  
   return (
     <section>
       <div className="container">

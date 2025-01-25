@@ -1,6 +1,7 @@
 import { Routes } from "@/constants/enums";
 import Link from "../link";
 import Navbar from "./Navbar";
+import CartButton from "./CartButton";
 
 const Header = () => {
   return (
@@ -13,6 +14,7 @@ const Header = () => {
           Logo
         </Link>
         <Navbar />
+        <CartButton />
       </div>
     </header>
   );

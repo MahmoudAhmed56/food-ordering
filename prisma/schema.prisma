@@ -39,7 +39,7 @@ model Product {
   description String
   image       String
   order       Int
-  basePrise   Float
+  basePrice   Float
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   sizes       Size[]
