@@ -18,3 +18,7 @@ export const getSubTotal =(cart:CartItem[])=>{
     return total + itemTotal * cartItem.quantity!
   },0)
 }
+
+export const getTotalAmount = (cart:CartItem[])=>{
+  return getSubTotal(cart) + deliveryFee
+}
