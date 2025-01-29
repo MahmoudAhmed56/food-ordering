@@ -1,18 +1,22 @@
 import MainHeading from "@/components/main-heading";
 import Menu from "@/components/menu";
-import { formatCurrency } from "@/lib/forrmaters";
-import { db } from "@/lib/prisma";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 import { getBestSellers, getProductsByCategory } from "@/server/db/products";
-import Image from "next/image";
 
 const BestSellers = async () => {
   const bestSellers = await getBestSellers();
-  
+  const locale = await getCurrentLocale();
+  const { home } = await getTrans(locale);
+  const { bestSeller } = home;
   return (
     <section>
       <div className="container">
         <div className="text-center mb-4">
-          <MainHeading title={"CheckOut"} subTitle={"Our Best Sellers"} />
+          <MainHeading
+            title={bestSeller.OurBestSellers}
+            subTitle={bestSeller.checkOut}
+          />
         </div>
         <Menu items={bestSellers} />
       </div>

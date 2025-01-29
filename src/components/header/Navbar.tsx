@@ -5,22 +5,22 @@ import { Button, buttonVariants } from '../ui/button';
 import { useState } from 'react';
 import { Menu, XIcon } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
-function Navbar() {
+function Navbar({translations}:{translations:{[key:string]:string}}) {
   const [openMenu, setOpenMenu] = useState(false);
   const { locale } = useParams();
   const pathname = usePathname();
   console.log(pathname);
   const links = [
-    { id: crypto.randomUUID(), title: "menu", href: Routes.MENU },
-    { id: crypto.randomUUID(), title: "about", href: Routes.ABOUT },
+    { id: crypto.randomUUID(), title: translations.menu, href: Routes.MENU },
+    { id: crypto.randomUUID(), title: translations.about, href: Routes.ABOUT },
     {
       id: crypto.randomUUID(),
-      title: "contact",
+      title: translations.contact,
       href: Routes.CONTACT,
     },
     {
       id: crypto.randomUUID(),
-      title: "login",
+      title: translations.login,
       href: `${Routes.AUTH}/${Pages.LOGIN}`,
     },
   ];
