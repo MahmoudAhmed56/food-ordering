@@ -5,11 +5,14 @@ import { Button, buttonVariants } from '../ui/button';
 import { useState } from 'react';
 import { Menu, XIcon } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
-function Navbar({translations}:{translations:{[key:string]:string}}) {
+function Navbar({ translations }: { translations: { [key: string]: string } }) {
   const [openMenu, setOpenMenu] = useState(false);
-  const { locale } = useParams();
+  const { local } = useParams();
+  const params = useParams();
+  
+
+    
   const pathname = usePathname();
-  console.log(pathname);
   const links = [
     { id: crypto.randomUUID(), title: translations.menu, href: Routes.MENU },
     { id: crypto.randomUUID(), title: translations.about, href: Routes.ABOUT },
@@ -24,6 +27,8 @@ function Navbar({translations}:{translations:{[key:string]:string}}) {
       href: `${Routes.AUTH}/${Pages.LOGIN}`,
     },
   ];
+
+  
   return (
     <nav className='flex-1 justify-end flex'>
       <Button
@@ -50,13 +55,13 @@ function Navbar({translations}:{translations:{[key:string]:string}}) {
         {links.map((link) => (
           <li key={link.id}>
             <Link
-              href={`/${locale}/${link.href}`}
+              href={`/${local}/${link.href}`}
               className={`${
                 link.href === `${Routes.AUTH}/${Pages.LOGIN}`
                   ? `${buttonVariants({ size: 'lg' })} !px-8 !rounded-full`
                   : 'hover:text-primary duration-200 transition-colors'
               }  font-semibold ${
-                pathname.startsWith(`/${locale}/${link.href}`)
+                pathname.startsWith(`/${local}/${link.href}`)
                   ? 'text-primary'
                   : 'text-accent'
               }`}

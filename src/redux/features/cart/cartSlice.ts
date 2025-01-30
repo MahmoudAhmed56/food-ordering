@@ -19,7 +19,6 @@ let initialCartItems;
 
 if (typeof window !== "undefined") {
   initialCartItems = localStorage.getItem('cartItems');
-  console.log(initialCartItems);
   
 }
 

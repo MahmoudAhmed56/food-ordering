@@ -2,7 +2,6 @@ import CartItems from "./_components/CartItems"
 import CheckoutForm from "./_components/CheckoutForm"
 
 const CartPage = () => {
-  console.log("ff");
   
   return (
     <main>
