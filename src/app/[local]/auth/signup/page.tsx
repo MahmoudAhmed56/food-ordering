@@ -18,11 +18,11 @@ const SignUpPage = async ({
         <div className="container element-center">
           <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold text-center text-black mb-4">
-            register
+            {translations.auth.register.title}
             </h2>
             <Form translations={translations} />
             <p className="mt-2 flex items-center justify-center text-accent text-sm">
-              <span>already have an account?</span>
+              <span>{translations.auth.register.authPrompt.message}</span>
               <Link
                 href={`/${locale}/${Routes.AUTH}/${Pages.LOGIN}`}
                 className={`${buttonVariants({
@@ -30,7 +30,7 @@ const SignUpPage = async ({
                   size: "sm",
                 })} !text-black`}
               >
-                login
+                {translations.auth.register.authPrompt.loginLinkText}
               </Link>
             </p>
           </div>

@@ -6,7 +6,7 @@ import Checkbox from "./checkbox";
 import { ValidationErrors } from "@/validations/auth";
 
 interface Props extends IFormField {
-  error: any;
+  error: ValidationErrors;
 }
 
 const FormFields = (props: Props) => {
