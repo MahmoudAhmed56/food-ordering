@@ -13,7 +13,7 @@ const LanguageSwitcher = () => {
     router.push(path);
   };
   return (
-    <div className="flex mx-4">
+    <div className="flex">
       {local === Languages.ARABIC ? (
         <Button
           variant="outline"
