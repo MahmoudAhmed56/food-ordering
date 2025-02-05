@@ -9,11 +9,7 @@ const ProfilePage = async ({
 }: {
   params: Promise<{ locale: Locale }>;
 }) => {
-  const {locale} = await params;
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect(`/${locale}/${Routes.AUTH}/${Pages.LOGIN}`);
-  }
+ 
   return <main></main>;
 };
 
