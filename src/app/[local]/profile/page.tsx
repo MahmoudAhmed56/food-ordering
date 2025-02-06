@@ -9,7 +9,7 @@ const ProfilePage = async ({
 }: {
   params: Promise<{ locale: Locale }>;
 }) => {
- 
+  const session = await getServerSession(authOptions)
   return <main></main>;
 };
 

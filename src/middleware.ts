@@ -6,6 +6,7 @@ import { i18n, LanguageType, Locale } from './i18n.config';
 import {withAuth} from "next-auth/middleware"
 import { getToken } from 'next-auth/jwt';
 import { Pages, Routes } from './constants/enums';
+import { UserRole } from '@prisma/client';
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
@@ -50,9 +51,23 @@ export default withAuth(async function middleware(request: NextRequest) {
     )
   }
   if (isAuthPage && isAuth) {
+    const role = isAuth.role
+    if (role === UserRole.ADMIN) {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${Routes.ADMIN}`,request.url)
+      )
+    }
     return NextResponse.redirect(
       new URL(`/${currentLocale}/${Routes.PROFILE}`,request.url)
     )
+  }
+  if (isAuth && pathname.startsWith(`/${currentLocale}/${Routes.ADMIN}`)) {
+    const role = isAuth.role
+    if (role !== UserRole.ADMIN) {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${Routes.PROFILE}`,request.url)
+      )
+    }
   }
   return response
 
