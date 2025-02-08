@@ -48,6 +48,7 @@ const useFormFields = ({ slug, translations }: Props) => {
       placeholder: translations.auth.register.confirmPassword.placeholder,
     },
   ]
+
   const getFormFields = (): IFormField[] => {
     switch (slug) {
       case Pages.LOGIN:

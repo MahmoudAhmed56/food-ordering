@@ -5,16 +5,16 @@ import { Languages } from "@/constants/enums";
 const LanguageSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { local } = useParams();
+  const { locale } = useParams();
   
   const switchLanguage = (newLocale: string) => {
     const path =
-      pathname?.replace(`/${local}`, `/${newLocale}`) ?? `/${newLocale}`;
+      pathname?.replace(`/${locale}`, `/${newLocale}`) ?? `/${newLocale}`;
     router.push(path);
   };
   return (
     <div className="flex">
-      {local === Languages.ARABIC ? (
+      {locale === Languages.ARABIC ? (
         <Button
           variant="outline"
           onClick={() => switchLanguage(Languages.ENGLISH)}
