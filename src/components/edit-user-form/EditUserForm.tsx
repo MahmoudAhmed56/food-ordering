@@ -54,7 +54,6 @@ function EditUserForm({
     slug: Routes.PROFILE,
     translations,
   });
-
   useEffect(() => {
     if (state.message && state.status && !pending) {
       toast({

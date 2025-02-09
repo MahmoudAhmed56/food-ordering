@@ -1,11 +1,17 @@
-"use server"
-
+"use server";
+import { Pages, Routes } from "@/constants/enums";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 import { db } from "@/lib/prisma";
 import getTrans from "@/lib/translation";
 import { updateProfileSchema } from "@/validations/profile";
+import { UserRole } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
-export const updateProfile = async(prevstate:unknown,formData:FormData)=>{
+export const updateProfile = async (
+  isAdmin: boolean,
+  prevState: unknown,
+  formData: FormData
+) => {
   const locale = await getCurrentLocale();
   const translations = await getTrans(locale);
   const result = updateProfileSchema(translations).safeParse(
@@ -19,16 +25,17 @@ export const updateProfile = async(prevstate:unknown,formData:FormData)=>{
     };
   }
   const data = result.data;
-  const imageFile = data.image as File
-  const imageUrl = Boolean(imageFile.size) ? await getImageUrl(imageFile) : undefined
-
+  const imageFile = data.image as File;
+  const imageUrl = Boolean(imageFile.size)
+    ? await getImageUrl(imageFile)
+    : undefined;
 
   try {
     const user = await db.user.findUnique({
-      where:{
-        email:data.email
-      }
-    })
+      where: {
+        email: data.email,
+      },
+    });
     if (!user) {
       return {
         message: translations.messages.userNotFound,
@@ -37,14 +44,25 @@ export const updateProfile = async(prevstate:unknown,formData:FormData)=>{
       };
     }
     await db.user.update({
-      where:{
-        email: user.email
+      where: {
+        email: user.email,
       },
-      data:{
+      data: {
         ...data,
-        image: imageUrl ?? user.image
-      }
-    }) 
+        image: imageUrl ?? user.image,
+        role: isAdmin ? UserRole.ADMIN : UserRole.USER,
+      },
+    });
+    revalidatePath(`/${locale}/${Routes.PROFILE}`);
+    revalidatePath(`/${locale}/${Routes.ADMIN}`);
+    revalidatePath(`/${locale}/${Routes.ADMIN}/${Pages.USERS}`);
+    revalidatePath(
+      `/${locale}/${Routes.ADMIN}/${Pages.USERS}/${user.id}/${Pages.EDIT}`
+    );
+    return {
+      status: 200,
+      message: translations.messages.updateProfileSucess,
+    };
   } catch (error) {
     console.error(error);
     return {
@@ -52,12 +70,13 @@ export const updateProfile = async(prevstate:unknown,formData:FormData)=>{
       message: translations.messages.unexpectedError,
     };
   }
-}
+};
 
-const getImageUrl = async(imageFile:File)=>{
+const getImageUrl = async (imageFile: File) => {
   const formData = new FormData();
-  formData.append("file",imageFile)
-  formData.append("pathName","profile_images")
+  formData.append("file", imageFile);
+  formData.append("pathName", "profile_images");
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`,
@@ -71,4 +90,4 @@ const getImageUrl = async(imageFile:File)=>{
   } catch (error) {
     console.error("Error uploading file to Cloudinary:", error);
   }
-}
+};
