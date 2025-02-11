@@ -9,3 +9,10 @@ export const addCategorySchema = (translations: Translations) => {
   });
 };
 
+export const updateCategorySchema = (translations: Translations) => {
+  return z.object({
+    categoryName: z.string().trim().min(1, {
+      message: translations.admin.categories.form.name.validation.required,
+    }),
+  });
+};
