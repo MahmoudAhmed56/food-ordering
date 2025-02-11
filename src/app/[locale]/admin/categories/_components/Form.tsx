@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { Translations } from "@/types/translations";
 import { ValidationError } from "next/dist/compiled/amphtml-validator";
 import { useActionState, useEffect } from "react";
+import { addCategory } from "../_actions/category";
 
 type InitialStateType = {
   message?: string;
