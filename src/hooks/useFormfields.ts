@@ -93,6 +93,28 @@ const useFormFields = ({ slug, translations }: Props) => {
       placeholder: translations.profile.form.country.placeholder,
     },
   ];
+  const addProductFields = (): IFormField[] => [
+    {
+      label: translations.admin["menu-items"].form.name.label,
+      name: "name",
+      type: "text",
+      placeholder: translations.admin["menu-items"].form.name.placeholder,
+      autoFocus: true,
+    },
+    {
+      label: translations.admin["menu-items"].form.description.label,
+      name: "description",
+      type: "text",
+      placeholder:
+        translations.admin["menu-items"].form.description.placeholder,
+    },
+    {
+      label: translations.admin["menu-items"].form.basePrice.label,
+      name: "basePrice",
+      type: "text",
+      placeholder: translations.admin["menu-items"].form.basePrice.placeholder,
+    },
+  ];
   const getFormFields = (): IFormField[] => {
     switch (slug) {
       case Pages.LOGIN:
@@ -101,6 +123,8 @@ const useFormFields = ({ slug, translations }: Props) => {
         return signupFields();
       case Routes.PROFILE:
         return profileFields();
+      case `${Routes.ADMIN}/${Pages.MENU_ITEMS}`:
+        return addProductFields();
       default:
         return [];
     }
