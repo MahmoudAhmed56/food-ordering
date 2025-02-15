@@ -35,4 +35,4 @@ async function MenuItems({ products }: { products: Product[] }) {
   );
 }
 
-export default MenuItems;j
+export default MenuItems;

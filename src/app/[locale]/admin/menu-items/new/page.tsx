@@ -5,7 +5,6 @@ import { authOptions } from "@/server/auth";
 import { UserRole } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-// import Form from "../_components/Form";
 import { getCategories } from "@/server/db/categories";
 import Form from "../_components/Form";
 

@@ -1,4 +1,4 @@
-import EditUserForm from "@/components/edit-user-form/EditUserForm";
+import EditUserForm from "@/components/edit-user-form";
 import { Pages, Routes } from "@/constants/enums";
 import { Locale } from "@/i18n.config";
 import getTrans from "@/lib/translation";
